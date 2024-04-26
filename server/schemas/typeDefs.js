@@ -7,6 +7,11 @@ const typeDefs = gql`
     email: String!
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Mood {
     id: ID!
     name: String!
@@ -33,6 +38,8 @@ const typeDefs = gql`
     createUser(username: String!, email: String!, password: String!): User
     createMood(name: String!): Mood
     createPlaylist(title: String!, iframeUrl: String!, description: String!, userId: ID!, moodId: ID!): Playlist
+    login(email: String!, password: String!): Auth
+    signup(username: String!, email: String!, password: String!): Auth
   }
 `;
 
