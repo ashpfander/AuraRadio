@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 // We declare an object called styles that will contain a few objects for card and heading styles
 // Notice that each key lists CSS styles in camel case
@@ -31,13 +32,27 @@ function Navbar() {
           Moods
         </Link>
       </li>
-      <li className="nav-item">
-        <Link to="/Login"
-          // Check to see if the currentPage is `Login`, and if so we use the active link class. Otherwise, we set it to a regular link class.
-          className={currentPage === '/Login' ? 'nav-link active' : 'nav-link'}>
-          Login
+      {/* if user is logged in show your playlists and logout */}
+      {Auth.isLoggedIn() ? (
+        <>
+        <li className="nav-item">
+        <Link to='/YourPlaylists'>
+          Your Playlists
         </Link>
-      </li>
+        </li>
+        <li className="nav-item">
+        <Link onClick={Auth.logout}>Logout</Link>
+        </li>
+        </>
+      ) : (
+        <li className="nav-item">
+          <Link to="/Login"
+          // Check to see if the currentPage is `Login`, and if so we use the active link class. Otherwise, we set it to a regular link class.
+          className={currentPage === '/LoginSignup' ? 'nav-link active' : 'nav-link'}>
+          Login/Signup
+          </Link>
+        </li>
+      )}
     </ul>
   );
 }
