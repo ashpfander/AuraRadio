@@ -9,6 +9,15 @@
   --hoveryellow: #ffefc6;
 }
 
+form a {
+  text-decoration: none;
+  color: var(--purple);
+}
+
+form a:hover {
+  color: #7c46d9;
+}
+
 header {
   background: var(--goldenyellow);
   padding: 1rem;
@@ -17,6 +26,17 @@ header {
 header h1 {
   color: white;
   font-size: 3rem;
+}
+
+.form-button {
+  background-color: var(--goldenyellow);
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.form-button:hover {
+  background-color: #dda516;
 }
 
 .home {
