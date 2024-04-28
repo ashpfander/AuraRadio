@@ -13,7 +13,7 @@ function LoginForm({ onLogin }) {
     <div className="container mt-5 d-flex justify-content-center">
     <form onSubmit={handleSubmit} className="col-5">
       <div className="mb-3">
-        <label for="username" className="form-label">Username:</label>
+        <label htmlFor="username" className="form-label">Username:</label>
         <input
           type="text"
           className="form-control"
@@ -23,7 +23,7 @@ function LoginForm({ onLogin }) {
         />
       </div>
       <div className="mb-3">
-        <label for="password" className="form-label">Password:</label>
+        <label htmlFor="password" className="form-label">Password:</label>
         <input
           type="password"
           className="form-control"
