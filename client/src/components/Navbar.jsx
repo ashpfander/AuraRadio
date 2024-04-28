@@ -45,6 +45,7 @@ function Navbar() {
         </li>
         </>
       ) : (
+        <>
         <li className="nav-item">
           <Link to="/login"
           // Check to see if the currentPage is `Login`, and if so we use the active link class. Otherwise, we set it to a regular link class.
@@ -52,6 +53,14 @@ function Navbar() {
           Login
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/signup"
+          // Check to see if the currentPage is `Sign Up`, and if so we use the active link class. Otherwise, we set it to a regular link class.
+          className={currentPage === '/signup' ? 'nav-link active' : 'nav-link'}>
+          Sign Up
+          </Link>
+        </li>
+        </>
       )}
     </ul>
   );
