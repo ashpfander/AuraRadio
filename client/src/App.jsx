@@ -41,7 +41,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Header />
-      {isAuthenticated ? <Outlet /> : <Navigate to="/login" />}
+      <Outlet />
     </ApolloProvider>
   );
 }
