@@ -3,14 +3,40 @@
   padding: 0;
 }
 
+:root {
+  --purple: #9a74db;
+  --goldenyellow: #f9b713;
+  --hoveryellow: #ffefc6;
+}
+
 header {
-  background: #f9b713;
+  background: var(--goldenyellow);
   padding: 1rem;
 }
 
 header h1 {
   color: white;
   font-size: 3rem;
+}
+
+.home {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.home-button {
+  background-color: white;
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--goldenyellow);
+  font-size: 1.25rem;
+}
+
+.home-button:hover {
+  background-color: var(--hoveryellow);
 }
 
 .nav-link {
@@ -20,5 +46,5 @@ header h1 {
 
 .nav-link:hover,
 .nav > .nav-item > .active {
-  color: #ffefc6;
+  color: var(--hoveryellow);
 }

@@ -1,11 +1,12 @@
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
 import Moods from './pages/Moods.jsx';
 import Playlists from './pages/Playlists.jsx';
 import LoginForm from './components/LoginForm.jsx';
 import SignUpForm from './components/SignUpForm.jsx';
+import Home from './pages/Home.jsx'
 
 // Function to check if user is authenticated
 const requireAuth = () => {
@@ -20,22 +21,22 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/login" />,
+        element: <Home />,
       },
       {
-        path: 'login',
+        path: '/login',
         element: <LoginForm />,
       },
       {
-        path: 'signup',
+        path: '/signup',
         element: <SignUpForm />,
       },
       {
-        path: 'moods',
+        path: '/moods',
         element: requireAuth(),
       },
       {
-        path: ':moodId/playlists',
+        path: '/:moodId/playlists',
         element: <Playlists />,
       },
     ]
