@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { SIGNUP_USER } from '../utils/mutations';
+import AuthService from '../utils/auth'; 
 
-function SignUpForm({ onSignUpSuccess }) {
+function SignUpForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signup, { data, loading, error }] = useMutation(SIGNUP_USER);
+
+  const handleSignUpSuccess = (token) => {
+    AuthService.handleSignUpSuccess(token); 
+    window.location.replace('/moods'); 
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,7 +20,8 @@ function SignUpForm({ onSignUpSuccess }) {
       const { data } = await signup({
         variables: { username, email, password }
       });
-      onSignUpSuccess(data.signup.token); // This function should handle what happens on successful signup, like storing the token and redirecting the user
+      const token = data.signup.token; 
+      handleSignUpSuccess(token); 
     } catch (e) {
       console.error('Error signing up:', e);
     }
@@ -61,4 +68,5 @@ function SignUpForm({ onSignUpSuccess }) {
 }
 
 export default SignUpForm;
+
 
