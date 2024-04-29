@@ -1,47 +1,38 @@
-
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const moods = [
-  {
-    title: "Happy",
-    description: "."
-  },
-  {
-    title: "Sad",
-    description: "."
-  },
-  {
-    title: "Energized",
-    description: ".",
-  },
-  {
-    title: "Nolstagic",
-    description: "."
-  },
-  {
-    title: "Rock",
-    description: "."
-  },
-  {
-    title: "Metal",
-    description: "."
-  },
-  {
-    title: "Grunge",
-    description: "."
-  },
-  {
-    title: "Pop",
-    description: "."
-  }
+  { id: '1', title: "Happy", description: "Feel good vibes" },
+  { id: '2', title: "Sad", description: "Melancholic tunes" },
+  { id: '3', title: "Energized", description: "Power up with high-energy beats and uplifting rhythms." },
+  { id: '4', title: "Nostalgic", description: "Revisit the classics that take you back in time." },
+  { id: '5', title: "Rock", description: "Unleash the guitars with the best of rock." },
+  { id: '6', title: "Metal", description: "Dive into the intense world of heavy metal." },
+  { id: '7', title: "Grunge", description: "Get raw and grungy with iconic tracks from the underground." },
+  { id: '8', title: "Pop", description: "Catchy hooks and melodies that stay with you." }
 ];
 
-
 function Moods() {
+  const navigate = useNavigate();
+
+  const handleMoodClick = (moodId) => {
+    navigate(`/${moodId}/playlists`);
+  };
+
   return (
-    <div className="card">
-     <div className="Moods text center p-5">
+    <div className="Moods text-center p-5">
       <h2>Select a Playlist for your mood!</h2>
-    </div>
+      <div className="list-group">
+        {moods.map(mood => (
+          <button
+            key={mood.id}
+            className="list-group-item list-group-item-action"
+            onClick={() => handleMoodClick(mood.id)}
+          >
+            {mood.title}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
