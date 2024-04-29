@@ -39,8 +39,32 @@ const moods = [
 function Moods() {
   return (
     <div className="card">
-     <div className="Moods text center p-5">
-      <h2>Select a Playlist for your mood!</h2>
+     <div class="row">
+      <header>Select a Playlist for your mood!</header>
+      <div class="column left" style="background-color:#yellow;">
+        <button>Happy</button>
+        </div>
+        <div class="column left" style="background-color:#blue;">
+            <button>Sad</button>
+        </div>
+        <div class="column left" style="background-color:#orange;">
+            <button>Energized</button>
+        </div>
+        <div class="column left" style="background-color:#purple;">
+            <button>Nolstagic</button>
+        </div>
+        <div class="column right" style="background-color:#red;">
+            <button>Rock</button>
+        </div>
+        <div class="column right" style="background-color:#black;">
+            <button>Metal</button>
+        </div>
+        <div class="column right" style="background-color:#green;">
+            <button>Grunge</button>
+        </div>
+        <div class="column right" style="background-color:#pink;">
+            <button>Pop</button>
+        </div>
     </div>
     </div>
   );
