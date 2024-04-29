@@ -1,16 +1,17 @@
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, Navigate, useLocation } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
 import Moods from './pages/Moods.jsx';
 import Playlists from './pages/Playlists.jsx';
 import LoginForm from './components/LoginForm.jsx';
 import SignUpForm from './components/SignUpForm.jsx';
-import Home from './pages/Home.jsx'
+import Home from './pages/Home.jsx';
+import AuthService from './utils/auth'; // Import AuthService
 
 // Function to check if user is authenticated
 const requireAuth = () => {
-  return localStorage.getItem('id_token') ? <Moods /> : <Navigate to="/login" />;
+  return AuthService.isLoggedIn() ? <Moods /> : <Navigate to="/login" />;
 };
 
 const router = createBrowserRouter([
@@ -25,11 +26,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <LoginForm />,
+        element: <LoginForm onLoginSuccess={AuthService.handleLoginSuccess} />, // Pass onLoginSuccess prop
       },
       {
         path: '/signup',
-        element: <SignUpForm />,
+        element: <SignUpForm onSignUpSuccess={AuthService.handleSignUpSuccess} />, // Pass onSignUpSuccess prop
       },
       {
         path: '/moods',
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
       },
     ]
   }
-])
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
