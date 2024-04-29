@@ -1,19 +1,25 @@
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function Home() {
   const location = useLocation();
 
-  // Sets the background color based on path
-  const getBackgroundColor = () => {
-    if (location.pathname === '/') {
-      return '#f9b713'; // Sets this background color only for home route
-    } else {
-      return 'white'; // Set default background color of white for everywhere else
-    }
-  };
+  useEffect(() => {
+    // Sets the background color based on path
+    const getBackgroundColor = () => {
+      if (location.pathname === '/') {
+        document.body.style.backgroundColor = '#f9b713'; // Sets this background color only for home route
+      } else {
+        document.body.style.backgroundColor = 'white'; // Set default background color of white for everywhere else
+      }
+    };
 
-  // Dynamically set the body background color based on the path
-  document.body.style.backgroundColor = getBackgroundColor();
+    getBackgroundColor();
+
+    return () => {
+      document.body.style.backgroundColor = ''; // Reset background color when component unmounts
+    };
+  }, [location]);
 
   return (
     <div className="container">

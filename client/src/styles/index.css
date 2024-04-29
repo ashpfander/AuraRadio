@@ -59,6 +59,10 @@ header h1 {
   background-color: var(--hoveryellow);
 }
 
+.home-link {
+  text-decoration: none;
+}
+
 .nav-link {
   color: white;
   font-size: 1.35rem;
