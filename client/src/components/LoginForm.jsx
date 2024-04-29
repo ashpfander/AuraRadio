@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
+import AuthService from '../utils/auth'; // Import AuthService
 
-function LoginForm({ onLoginSuccess }) {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, { data, loading, error }] = useMutation(LOGIN_USER);
@@ -13,7 +14,7 @@ function LoginForm({ onLoginSuccess }) {
       const { data } = await login({
         variables: { email, password }
       });
-      onLoginSuccess(data.login.token);  
+      AuthService.handleLoginSuccess(data.login.token); // Call handleLoginSuccess from AuthService
     } catch (e) {
       console.error('Error logging in:', e);
     }
