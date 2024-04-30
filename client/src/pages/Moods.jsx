@@ -21,7 +21,7 @@ function Moods() {
 
   return (
     <div className="Moods text-center p-5">
-      <h2>Select a Playlist for your mood!</h2>
+      <header>Select a Playlist for your Mood!</header>
       <div className="list-group">
         {moods.map(mood => (
           <button
