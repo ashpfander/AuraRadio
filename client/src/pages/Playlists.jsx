@@ -1,26 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { CREATE_PLAYLIST } from '../utils/mutations';
 
 function Playlists() {
-  const { moodId } = useParams(); // Get moodId from the URL parameter
+  const [iframeInput, setIframeInput] = useState('');
+  const [createPlaylist, { data, loading, error }] = useMutation(CREATE_PLAYLIST);
+  const { moodId } = useParams(); 
 
-  const getPlaylistUrl = (moodId) => {
-    return `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${moodId}`;
+  const handleIframeInput = (event) => {
+    setIframeInput(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const urlMatch = iframeInput.match(/src="([^"]+)"/);
+    if (urlMatch) {
+      try {
+        const iframeUrl = urlMatch[1];
+        await createPlaylist({
+          variables: {
+            title: "New Playlist",
+            iframeUrl,
+            description: "User submitted playlist",
+            userId: "YourUserIdHere", 
+            moodId
+          }
+        });
+        setIframeInput(''); // Reset the input after successful submission
+      } catch (error) {
+        console.error('Error submitting the playlist:', error);
+      }
+    } else {
+      alert('Invalid iframe input. Please check your input and try again.');
+    }
   };
 
   return (
     <div>
-      <iframe
-        width="100%"
-        height="300"
-        scrolling="no"
-        frameborder="no"
-        allow="autoplay"
-        src={getPlaylistUrl(moodId)}
-        style={{ border: "none", overflow: "hidden" }}
-      ></iframe>
+      <h2>Add a Playlist</h2>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          value={iframeInput}
+          onChange={handleIframeInput}
+          placeholder="Paste the SoundCloud iframe here"
+          style={{ width: '100%', height: '100px' }}
+        />
+        <button type="submit" disabled={loading}>
+          Submit Playlist
+        </button>
+        {loading && <p>Submitting...</p>}
+        {error && <p>Error submitting playlist: {error.message}</p>}
+      </form>
+      <div>
+        {/* Additional code to display playlists if needed */}
+      </div>
     </div>
   );
 }
 
 export default Playlists;
+
