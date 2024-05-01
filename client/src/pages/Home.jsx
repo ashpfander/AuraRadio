@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 function Home() {
   const location = useLocation();
 
+
   useEffect(() => {
     // Sets the background color based on path
     const getBackgroundColor = () => {
