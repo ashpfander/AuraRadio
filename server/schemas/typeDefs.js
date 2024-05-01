@@ -1,8 +1,10 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar ObjectId
+
   type User {
-    id: ID!
+    id: ObjectId
     username: String!
     email: String!
   }
@@ -13,15 +15,15 @@ const typeDefs = gql`
   }
 
   type Mood {
-    id: ID!
+    id: ObjectId
     name: String!
     playlists: [Playlist]
   }
 
   type Playlist {
-    id: ID!
+    id: ObjectId
     title: String!
-    iframeUrl: String!
+    iframeContent: String!
     description: String!
     user: User!
     mood: Mood!
@@ -31,13 +33,13 @@ const typeDefs = gql`
     getUsers: [User]
     getMoods: [Mood]
     getPlaylists: [Playlist]
-    getPlaylistsByMood(moodId: ID!): [Playlist]
+    getPlaylistsByMood(moodId: ObjectId!): [Playlist]
   }
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
     createMood(name: String!): Mood
-    createPlaylist(title: String!, iframeUrl: String!, description: String!, userId: ID!, moodId: ID!): Playlist
+    createPlaylist(title: String!, iframeContent: String!, description: String!, userId: ObjectId!, moodId: ObjectId!): Playlist
     login(email: String!, password: String!): Auth
     signup(username: String!, email: String!, password: String!): Auth
   }

@@ -5,4 +5,5 @@ const moodSchema = new mongoose.Schema({
   description: String
 });
 
-module.exports = mongoose.model('Mood', moodSchema);
+const Mood = mongoose.model('Mood', moodSchema);
+module.exports = Mood;
