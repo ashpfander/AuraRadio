@@ -14,10 +14,24 @@ function Playlists() {
 
   const [createPlaylist, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PLAYLIST, {
     onCompleted: data => {
-      console.log('Playlist created successfully:', data);
-      setIframeInput(''); // Clear the input field after submission
+      console.log('Playlist created successfully:', data.createPlaylist);
+      setIframeInput(''); 
       setTitle('');
       setDescription('');
+    },
+    update: (cache, { data: { createPlaylist } }) => {
+      const existingPlaylists = cache.readQuery({
+        query: GET_PLAYLISTS_BY_MOOD,
+        variables: { moodId }
+      });
+
+      cache.writeQuery({
+        query: GET_PLAYLISTS_BY_MOOD,
+        variables: { moodId },
+        data: {
+          getPlaylistsByMood: [...existingPlaylists.getPlaylistsByMood, createPlaylist]
+        }
+      });
     },
     onError: (error) => {
       console.error('Error submitting the playlist:', error);
@@ -33,7 +47,6 @@ function Playlists() {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    // Ensure user is logged in and get user ID
     if (!userId) {
       console.error("User ID is undefined. User must be logged in to submit a playlist.");
       return; 
@@ -42,17 +55,15 @@ function Playlists() {
     console.log("Submitting with data:", { title, iframeContent: iframeInput, description, userId, moodId });
   
     try {
-      const response = await createPlaylist({
+      await createPlaylist({
         variables: {
-          title, 
+          title,
           iframeContent: iframeInput,
-          description, 
-          userId, 
+          description,
+          userId,
           moodId
         }
       });
-      console.log('Playlist created successfully:', response.data);
-      setIframeInput(''); // Clear the input field after submission
     } catch (error) {
       console.error('Error submitting the playlist:', error);
       if (error.graphQLErrors) console.error('GraphQL Errors:', error.graphQLErrors);
@@ -65,37 +76,37 @@ function Playlists() {
 
   return (
     <div>
-      <h2>Add a Playlist</h2>
+      <h2>Drop a Vibe</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title of the playlist"
+          placeholder="Name It"
           required
         />
         <textarea
           value={iframeInput}
           onChange={(e) => setIframeInput(e.target.value)}
-          placeholder="Paste the SoundCloud iframe here"
+          placeholder="Paste the Magic here"
           required
           style={{ width: '100%', height: '100px' }}
         />
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Describe the playlist"
+          placeholder="Paint the picture"
           required
           style={{ width: '100%', height: '50px' }}
         />
         <button type="submit" disabled={mutationLoading}>
-          Submit Playlist
+        Send It to the Clouds
         </button>
         {mutationLoading && <p>Submitting...</p>}
         {mutationError && <p>Error submitting playlist: {mutationError.message}</p>}
       </form>
       <div>
-        <h3>Existing Playlists</h3>
+        <h3>Vibe Vault</h3>
         {data && data.getPlaylistsByMood.map((playlist, index) => (
           <div key={index}>
             <p>{playlist.title}</p>
@@ -108,6 +119,3 @@ function Playlists() {
 }
 
 export default Playlists;
-
-
-
