@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const moods = [
@@ -15,22 +15,42 @@ const moods = [
 function Moods() {
   const navigate = useNavigate();
 
+  // const randomBackgroundColor = () => {
+  //   const [color, setColor] = useState("");
+
+  //   const generateColor = () => {
+  //     var random1 = Math.floor(Math.random() * 256);
+  //     var random2 = Math.floor(Math.random() * 256);
+  //     var random3 = Math.floor(Math.random() * 256);
+  //     var bgColor = `rgb(${random1}, ${random2}, ${random3})`;
+  //     setColor(bgColor);
+  //   };
+
+  //   generateColor();
+
+  //   return color;
+  // };
+
   const handleMoodClick = (moodId) => {
     navigate(`/${moodId}/playlists`);
   };
 
   return (
-    <div className="Moods text-center p-5">
-      <h2>Select a Playlist for your mood!</h2>
-      <div className="list-group">
+    <div className="container-fluid text-center p-5">
+      <h2 className="mb-3">Select a Playlist for your mood!</h2>
+      <div className="row">
         {moods.map(mood => (
+          <div className="list-group col-6 mb-3">
           <button
             key={mood.id}
-            className="list-group-item list-group-item-action"
+            className="moods list-group-item list-group-item-action pt-4 pb-3"
+            style={{ backgroundColor: "blue" }}
             onClick={() => handleMoodClick(mood.id)}
           >
-            {mood.title}
+            <h3>{mood.title}</h3>
+            <p>{mood.description}</p>
           </button>
+          </div>
         ))}
       </div>
     </div>
