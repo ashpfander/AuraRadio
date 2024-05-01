@@ -15,6 +15,11 @@ const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
+/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+particlesJS.load('particles-js', 'assets/particles.json', function() {
+  console.log('callback - particles.js config loaded');
+}); 
+
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
