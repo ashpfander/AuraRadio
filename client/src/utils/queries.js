@@ -15,16 +15,17 @@ export const GET_MOODS = gql`
     getMoods {
       id
       name
+      description
     }
   }
 `;
 
 export const GET_PLAYLISTS_BY_MOOD = gql`
-  query GetPlaylistsByMood($moodId: ID!) {
+  query GetPlaylistsByMood($moodId: ObjectId!) {
     getPlaylistsByMood(moodId: $moodId) {
       id
       title
-      iframeUrl
+      iframeContent
       description
       user {
         id
@@ -39,7 +40,7 @@ export const GET_PLAYLISTS = gql`
     getPlaylists {
       id
       title
-      iframeUrl
+      iframeContent
       description
       mood {
         id

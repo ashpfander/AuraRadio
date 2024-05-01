@@ -4,43 +4,34 @@
 }
 
 :root {
-  --purple: #9a74db;
-  --goldenyellow: #f9b713;
-  --hoveryellow: #ffefc6;
-}
-
-form a {
-  text-decoration: none;
-  color: var(--purple);
-}
-
-form a:hover {
-  color: #7c46d9;
+  --purple: #c7a7ff;
+  --darkerpurple: #9119c9;
+  --hoveryellow: #d8d8d8c7;
 }
 
 header {
-  background: var(--goldenyellow);
+  background: var(--darkerpurple);
   padding: 1rem;
 }
 
 header h1 {
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 3rem;
 }
 
 .form-button {
-  background-color: var(--goldenyellow);
-  border: none;
+  background-color: rgb(124, 168, 124);
+  border-style:hidden;
   border-radius: 0.5rem;
   color: white;
 }
 
 .form-button:hover {
-  background-color: #dda516;
+  background-color: #85b6bb;
 }
 
 .home {
-  color: white;
+  color: rgb(8, 121, 14);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -48,15 +39,15 @@ header h1 {
 }
 
 .home-button {
-  background-color: white;
+  color: aliceblue;
+  background-color: rgb(199, 52, 52);
   border: none;
   border-radius: 0.5rem;
-  color: var(--goldenyellow);
   font-size: 1.25rem;
 }
 
 .home-button:hover {
-  background-color: var(--hoveryellow);
+  background-color:#d85da9;
 }
 
 .home-link {
