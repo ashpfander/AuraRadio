@@ -54,6 +54,14 @@ header h1 {
   text-decoration: none;
 }
 
+.moods {
+  color: white;
+}
+
+.moods:hover {
+  opacity: 0.85;
+}
+
 .nav-link {
   color: white;
   font-size: 1.35rem;

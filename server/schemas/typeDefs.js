@@ -17,6 +17,7 @@ const typeDefs = gql`
   type Mood {
     id: ObjectId
     name: String!
+    description: String
     playlists: [Playlist]
   }
 

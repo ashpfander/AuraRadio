@@ -15,6 +15,7 @@ export const CREATE_MOOD = gql`
     createMood(name: $name) {
       id
       name
+      description
     }
   }
 `;

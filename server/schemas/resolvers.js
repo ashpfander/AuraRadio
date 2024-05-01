@@ -64,8 +64,8 @@ const resolvers = {
       await newUser.save();
       return newUser;
     },
-    createMood: async (_, { name }) => {
-      const newMood = new Mood({ name });
+    createMood: async (_, { name, description }) => {
+      const newMood = new Mood({ name, description });
       await newMood.save();
       return newMood;
     },

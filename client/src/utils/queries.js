@@ -15,6 +15,7 @@ export const GET_MOODS = gql`
     getMoods {
       id
       name
+      description
     }
   }
 `;
