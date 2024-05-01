@@ -3,9 +3,7 @@
     --spotify-green: #1DB954;
     --footer-height: 40px;
 }
-html, {
-    cursor: default;
-}
+
 
 body {
     box-sizing: border-box;
