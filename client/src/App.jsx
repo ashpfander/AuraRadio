@@ -6,8 +6,9 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
-import './styles/App.css'
-import Navbar from './components/Navbar';
+import './styles/index.css'
+import Header from './components/header';
+import { Navigate } from 'react-router-dom';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -34,12 +35,15 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // Logic to check if the user is authenticated
+  const isAuthenticated = localStorage.getItem('id_token');
+
   return (
     <ApolloProvider client={client}>
-      <Navbar />
+      <Header />
       <Outlet />
     </ApolloProvider>
   );
 }
 
-export default App
+export default App;

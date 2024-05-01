@@ -1,10 +1,14 @@
-// Here we are importing a CSS file as a dependency
-import '../styles/header.css';
+import Navbar from './Navbar';
 
 function Header() {
   return (
-    <header className="header">
-      <h1>Home</h1>
+    <header className="ps-4">
+      <nav className="navbar navbar-expand-lg navbar-dark">
+        <div className="container-fluid d-flex align-items-center">
+          <a href="/" className="home-link"><h1>Aura Radio ၊၊||၊၊၊||၊၊၊||၊</h1></a>
+          <Navbar />
+        </div>
+      </nav>
     </header>
   );
 }
