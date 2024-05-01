@@ -21,7 +21,7 @@ const typeDefs = gql`
   type Playlist {
     id: ID!
     title: String!
-    iframeUrl: String!
+    iframeContent: String!
     description: String!
     user: User!
     mood: Mood!

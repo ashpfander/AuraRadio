@@ -1,5 +1,7 @@
 const { User, Mood, Playlist } = require('../models');
 const { signToken } = require('../utils/auth');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const resolvers = {
   Query: {
@@ -13,7 +15,15 @@ const resolvers = {
       return Playlist.find({});
     },
     getPlaylistsByMood: async (_, { moodId }) => {
-      return Playlist.find({ mood: moodId });
+      console.log("Received moodId:", moodId);
+      try {
+        if (!ObjectId.isValid(moodId)) {
+          throw new Error(`Invalid ID format: ${moodId}`);
+        }
+        return await Playlist.find({ mood: new ObjectId(moodId) });
+      } catch (err) {
+        console.error("Error loading the playlists:", err.message);
+      }
     }
   },
   Mutation: {
@@ -27,8 +37,18 @@ const resolvers = {
       await newMood.save();
       return newMood;
     },
-    createPlaylist: async (_, { title, iframeUrl, description, userId, moodId }) => {
-      const newPlaylist = new Playlist({ title, iframeUrl, description, user: userId, mood: moodId });
+    createPlaylist: async (_, { title, iframeContent, description, userId, moodId }) => {
+      console.log("Received mutation data:", { title, iframeContent, description, userId, moodId });
+      if (!ObjectId.isValid(userId) || !ObjectId.isValid(moodId)) {
+        throw new Error("Invalid user or mood ID format");
+      }
+      const newPlaylist = new Playlist({
+        title, 
+        iframeContent, 
+        description,
+        user: ObjectId(userId),
+        mood: ObjectId(moodId)
+      });
       await newPlaylist.save();
       return newPlaylist;
     },

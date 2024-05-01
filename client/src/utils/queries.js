@@ -24,7 +24,7 @@ export const GET_PLAYLISTS_BY_MOOD = gql`
     getPlaylistsByMood(moodId: $moodId) {
       id
       title
-      iframeUrl
+      iframeContent
       description
       user {
         id
@@ -39,7 +39,7 @@ export const GET_PLAYLISTS = gql`
     getPlaylists {
       id
       title
-      iframeUrl
+      iframeContent
       description
       mood {
         id

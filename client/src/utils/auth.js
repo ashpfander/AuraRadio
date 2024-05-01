@@ -1,3 +1,5 @@
+import jwtDecode from 'jwt-decode';
+
 class AuthService {
   getToken() {
     return localStorage.getItem('id_token');
@@ -49,6 +51,15 @@ class AuthService {
   handleSignUpSuccess(token) {
     this.login(token);
     window.location.replace('/moods');
+  }
+
+  getUserId() {
+    const token = this.getToken();
+    if (token) {
+      const decoded = jwtDecode(token);
+      return decoded._id;
+    }
+    return null;
   }
 }
 
