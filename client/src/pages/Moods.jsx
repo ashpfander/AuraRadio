@@ -31,7 +31,7 @@ function Moods() {
         {moods.map(mood => (
           <div className="list-group col-6 mb-3" key={mood.id}>
           <button
-            className="moods list-group-item list-group-item-action pt-4 pb-3"
+            className="moods list-group-item pt-4 pb-3"
             style={{ backgroundColor: getRandomColor() }}
             onClick={() => handleMoodClick(mood.id)}
           >
