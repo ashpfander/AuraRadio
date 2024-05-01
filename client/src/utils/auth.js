@@ -57,10 +57,10 @@ class AuthService {
     const token = this.getToken();
     if (token) {
       const decoded = jwtDecode(token);
-      return decoded._id;
+      return decoded.data._id; 
     }
     return null;
-  }
+}
 }
 
 export default new AuthService();

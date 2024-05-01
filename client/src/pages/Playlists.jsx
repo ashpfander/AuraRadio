@@ -12,26 +12,47 @@ function Playlists() {
   const { moodId } = useParams();
   const userId = AuthService.getUserId();  
 
-  const [createPlaylist, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PLAYLIST);
+  const [createPlaylist, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PLAYLIST, {
+    onCompleted: data => {
+      console.log('Playlist created successfully:', data);
+      setIframeInput(''); // Clear the input field after submission
+      setTitle('');
+      setDescription('');
+    },
+    onError: (error) => {
+      console.error('Error submitting the playlist:', error);
+      if (error.graphQLErrors) console.error('GraphQL Errors:', error.graphQLErrors);
+      if (error.networkError) console.error('Network Error:', error.networkError);
+    }
+  });
+
   const { loading: queryLoading, error: queryError, data } = useQuery(GET_PLAYLISTS_BY_MOOD, {
     variables: { moodId }
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitting with data:", { title, iframeInput, description, userId, moodId });
+  
+    // Ensure user is logged in and get user ID
+    if (!userId) {
+      console.error("User ID is undefined. User must be logged in to submit a playlist.");
+      return; 
+    }
+  
+    console.log("Submitting with data:", { title, iframeContent: iframeInput, description, userId, moodId });
+  
     try {
       const response = await createPlaylist({
         variables: {
-          title: title,  
+          title, 
           iframeContent: iframeInput,
-          description: description,  
-          userId: userId,  
-          moodId: moodId  
+          description, 
+          userId, 
+          moodId
         }
       });
       console.log('Playlist created successfully:', response.data);
-      // Reset the form state here if needed
+      setIframeInput(''); // Clear the input field after submission
     } catch (error) {
       console.error('Error submitting the playlist:', error);
       if (error.graphQLErrors) console.error('GraphQL Errors:', error.graphQLErrors);
@@ -87,7 +108,6 @@ function Playlists() {
 }
 
 export default Playlists;
-
 
 
 

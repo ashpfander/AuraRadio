@@ -46,10 +46,19 @@ const startApolloServer = async () => {
     const server = new ApolloServer({
       typeDefs,
       resolvers,
+      formatError: (err) => {
+        console.log(`GraphQL Error:`, err);
+        return err;
+      }
     });
 
     await server.start();
     server.applyMiddleware({ app, path: '/graphql' });
+
+    app.use('/graphql', (req, res, next) => {
+      console.log('Incoming GraphQL request:', req.body);
+      next();
+    });
 
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());

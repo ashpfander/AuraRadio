@@ -20,7 +20,7 @@ export const GET_MOODS = gql`
 `;
 
 export const GET_PLAYLISTS_BY_MOOD = gql`
-  query GetPlaylistsByMood($moodId: ID!) {
+  query GetPlaylistsByMood($moodId: ObjectId!) {
     getPlaylistsByMood(moodId: $moodId) {
       id
       title

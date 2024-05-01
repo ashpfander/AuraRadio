@@ -1,9 +1,33 @@
 const { User, Mood, Playlist } = require('../models');
 const { signToken } = require('../utils/auth');
 const mongoose = require('mongoose');
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 const ObjectId = mongoose.Types.ObjectId;
 
+// Define custom ObjectId scalar
+const objectIdScalar = new GraphQLScalarType({
+  name: 'ObjectId',
+  description: 'MongoDB ObjectId scalar type',
+  serialize(value) {
+    if (value instanceof mongoose.Types.ObjectId) {
+      return value.toHexString();  // Convert ObjectId to string
+    }
+    return value;
+  },
+  parseValue(value) {
+    return new mongoose.Types.ObjectId(value);  // Convert string to ObjectId
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.STRING) {
+      return new mongoose.Types.ObjectId(ast.value);  // Convert string to ObjectId
+    }
+    return null;
+  }
+});
+
 const resolvers = {
+  ObjectId: objectIdScalar,
   Query: {
     getUsers: async () => {
       return User.find({});
@@ -16,13 +40,21 @@ const resolvers = {
     },
     getPlaylistsByMood: async (_, { moodId }) => {
       console.log("Received moodId:", moodId);
+      if (!ObjectId.isValid(moodId)) {
+        throw new Error(`Invalid ID format: ${moodId}`);
+      }
       try {
-        if (!ObjectId.isValid(moodId)) {
-          throw new Error(`Invalid ID format: ${moodId}`);
-        }
-        return await Playlist.find({ mood: new ObjectId(moodId) });
-      } catch (err) {
-        console.error("Error loading the playlists:", err.message);
+        const playlists = await Playlist.find({ mood: new ObjectId(moodId) }).populate('user');
+        return playlists.map(playlist => ({
+          ...playlist.toObject(),
+          user: {
+            ...playlist.user.toObject(),
+            id: playlist.user._id.toString()  // Ensure the user ID is converted to a string
+          }
+        }));
+      } catch (error) {
+        console.error("Failed to fetch playlists by mood:", error);
+        throw new Error("Error loading the playlists: " + error.message);
       }
     }
   },
@@ -39,18 +71,27 @@ const resolvers = {
     },
     createPlaylist: async (_, { title, iframeContent, description, userId, moodId }) => {
       console.log("Received mutation data:", { title, iframeContent, description, userId, moodId });
+    
       if (!ObjectId.isValid(userId) || !ObjectId.isValid(moodId)) {
         throw new Error("Invalid user or mood ID format");
       }
-      const newPlaylist = new Playlist({
-        title, 
-        iframeContent, 
-        description,
-        user: ObjectId(userId),
-        mood: ObjectId(moodId)
-      });
-      await newPlaylist.save();
-      return newPlaylist;
+    
+      try {
+        const newPlaylist = new Playlist({
+          title,
+          iframeContent,
+          description,
+          user: new ObjectId(userId), 
+          mood: new ObjectId(moodId)  
+        });
+        
+        await newPlaylist.save();
+        console.log("Playlist created successfully:", newPlaylist);
+        return newPlaylist;
+      } catch (error) {
+        console.error("Failed to create playlist:", error);
+        throw new Error("Failed to save the playlist to the database. Please try again.");
+      }
     },
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
@@ -70,4 +111,5 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+
 
