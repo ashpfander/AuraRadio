@@ -23,10 +23,10 @@ useEffect(() => {
   
     return (
         <div className="container">
-          <div className="home text-center p-5">
+          <div className="yourPlaylist text-center p-5">
             <h2>Previously listened to.</h2>
-            <a href="/moods">
-              <button className="p-3 mt-3 home-button">Playlist history</button>
+            <a href="/yourPlaylist">
+              <button className="p-3 mt-3 yourPlaylist-button">Playlist history</button>
             </a>
           </div>
         </div>

@@ -70,9 +70,7 @@ header h1 {
    /* ---- stats.js ---- */
    
    .count-particles{
-     background: #000022;
      position: absolute;
-     top: 48px;
      left: 0;
      width: 80px;
      color: #13E8E9;
@@ -91,7 +89,6 @@ header h1 {
    
    #stats,
    .count-particles{
-     -webkit-user-select: none;
      margin-top: 5px;
      margin-left: 5px;
    }

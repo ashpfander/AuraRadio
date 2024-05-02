@@ -7,6 +7,7 @@ import Playlists from './pages/Playlists.jsx';
 import LoginForm from './components/LoginForm.jsx';
 import SignUpForm from './components/SignUpForm.jsx';
 import Home from './pages/Home.jsx';
+import yourPlaylist from './pages/yourPlaylist.jsx';
 import AuthService from './utils/auth'; // Import AuthService
 
 // Function to check if user is authenticated
