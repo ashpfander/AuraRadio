@@ -9,7 +9,7 @@ function Playlists() {
   const [title, setTitle] = useState('');
   const [iframeInput, setIframeInput] = useState('');
   const [description, setDescription] = useState('');
-  const { moodId } = useParams()
+  const { moodId } = useParams();
   const userId = AuthService.getUserId();  
   const [moodName, setMoodName] = useState('');
   const client = useApolloClient();
