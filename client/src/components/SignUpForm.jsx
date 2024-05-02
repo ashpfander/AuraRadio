@@ -7,21 +7,30 @@ function SignUpForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [signup, { data, loading, error }] = useMutation(SIGNUP_USER);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignUpSuccess = (token) => {
-    AuthService.handleSignUpSuccess(token); 
-    window.location.replace('/moods'); 
-  };
+  const [signup, { data, loading, error }] = useMutation(SIGNUP_USER, {
+    onError: (error) => {
+      if (error.graphQLErrors[0].extensions.code === "USER_ALREADY_EXISTS") {
+        setErrorMessage("Account already exists with this email, please log in.");
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    },
+    onCompleted: (data) => {
+      const token = data.signup.token; 
+      AuthService.handleSignUpSuccess(token); 
+      window.location.replace('/moods'); 
+    }
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessage('');
     try {
-      const { data } = await signup({
+      await signup({
         variables: { username, email, password }
       });
-      const token = data.signup.token; 
-      handleSignUpSuccess(token); 
     } catch (e) {
       console.error('Error signing up:', e);
     }
@@ -60,13 +69,17 @@ function SignUpForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="form-button p-3 me-3 col-2">Sign Up</button>
-        <a href="/login">Already have a log in? Log In</a>
+        {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
+        <button type="submit" className="btn btn-primary" disabled={loading}>Sign Up</button>
+        <div className="mt-3">
+          <a href="/login">Already have a log in? Log In</a>
+        </div>
       </form>
     </div>
   );
 }
 
 export default SignUpForm;
+
 
 
