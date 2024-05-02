@@ -41,6 +41,10 @@ const router = createBrowserRouter([
         path: '/:moodId/playlists',
         element: <Playlists />,
       },
+      {
+        path: '/yourPlaylist',
+        element: <yourPlaylists />,
+      },
     ]
   }
 ]);
