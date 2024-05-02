@@ -98,18 +98,18 @@ const resolvers = {
       try {
         const user = await User.findOne({ email });
         if (!user) {
-          throw new ApolloError('Incorrect email/password combination.', 'INCORRECT_CREDENTIALS');
+          throw new Error('Incorrect Email or Password');
         }
     
         const isValid = await user.isCorrectPassword(password);
         if (!isValid) {
-          throw new ApolloError('Incorrect email/password combination.', 'INCORRECT_CREDENTIALS');
+          throw new Error('Incorrect Email or Password');
         }
     
         const token = signToken(user);
         return { token, user };
       } catch (error) {
-        throw new ApolloError('Failed to process login.', 'LOGIN_FAILED');
+        throw new Error('Incorrect Email or Password');
       }
     },
     signup: async (_, { username, email, password }) => {
