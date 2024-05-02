@@ -70,16 +70,11 @@ const resolvers = {
       return newMood;
     },
 
-
-
-    createyourPlaylist: async (_, { name, description }) => {
-      const newyourPlaylist = new yourPlaylist({ name, description });
-      await newyourPlaylist.save();
-      return newyourPlaylist;
-    },
-
-
-
+   // createyourPlaylist: async (_, { name, description }) => {
+   //   const newyourPlaylist = new yourPlaylist({ name, description });
+   //   await newyourPlaylist.save();
+   //   return newyourPlaylist;
+  //  },
 
 
     createPlaylist: async (_, { title, iframeContent, description, userId, moodId }) => {
