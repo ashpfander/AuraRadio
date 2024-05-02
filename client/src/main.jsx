@@ -1,13 +1,17 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import App from './App.jsx';
 import Moods from './pages/Moods.jsx';
 import Playlists from './pages/Playlists.jsx';
+import YourPlaylist from './pages/YourPlaylist.jsx';
+import Home from './pages/Home.jsx';
+
 import LoginForm from './components/LoginForm.jsx';
 import SignUpForm from './components/SignUpForm.jsx';
-import Home from './pages/Home.jsx';
-import yourPlaylist from './pages/yourPlaylist.jsx';
+
+
 import AuthService from './utils/auth'; // Import AuthService
 
 // Function to check if user is authenticated
@@ -43,8 +47,12 @@ const router = createBrowserRouter([
       },
       {
         path: '/yourPlaylist',
-        element: <yourPlaylists />,
+        element: <YourPlaylist />,
       },
+   //     {
+     //   path: '/playlistHistory',
+     //   element: <playlistHistory />,
+    //  },
     ]
   }
 ]);
