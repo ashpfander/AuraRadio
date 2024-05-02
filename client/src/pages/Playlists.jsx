@@ -13,6 +13,7 @@ function Playlists() {
   const userId = AuthService.getUserId();  
   const [moodName, setMoodName] = useState('');
   const client = useApolloClient();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { loading: queryLoading, error: queryError, data } = useQuery(GET_PLAYLISTS_BY_MOOD, {
     variables: { moodId }
@@ -77,6 +78,12 @@ function Playlists() {
       console.error("User ID is undefined. User must be logged in to submit a playlist.");
       return; 
     }
+
+    // Check if any of the input fields are empty
+    if (title === '' || iframeInput === '' || description === '') {
+      setErrorMessage('Some or all inputs are empty. Please fill out correctly.');
+      return;
+    }
   
     console.log("Submitting with data:", { title, iframeContent: iframeInput, description, userId, moodId });
   
@@ -105,7 +112,7 @@ function Playlists() {
       <div className="mt-5 d-flex justify-content-center">
         <div className="row">
           <h2 className="text-center">Drop a Vibe for {moodName}</h2>
-          <form onSubmit={handleSubmit} className="col-12">
+          <form onSubmit={handleSubmit} className="col-12" noValidate>
             <input
             type="text"
             className="form-control mb-3"
@@ -135,6 +142,7 @@ function Playlists() {
             </button>
             {mutationLoading && <p>Submitting...</p>}
             {mutationError && <p>Error submitting playlist: {mutationError.message}</p>}
+            {errorMessage && <p className="text-danger">{errorMessage}</p>}
           </form>
           <div>
             <h3 className="text-center">Vibe Vault</h3>
