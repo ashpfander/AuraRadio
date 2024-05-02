@@ -21,6 +21,13 @@ const typeDefs = gql`
     playlists: [Playlist]
   }
 
+  type yourPlaylist {
+    id: ObjectId
+    name: String!
+    description: String
+    playlists: [yourPlaylist]
+  }
+
   type Playlist {
     id: ObjectId
     title: String!
