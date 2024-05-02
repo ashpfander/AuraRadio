@@ -113,7 +113,9 @@ function Playlists() {
         <h3 className="text-center">Vibe Vault</h3>
         {data && data.getPlaylistsByMood.map((playlist, index) => (
           <div key={index}>
-            <p>{playlist.title}</p>
+            <hr className="line"/>
+            <h4>{playlist.title}</h4>
+            <p>{playlist.description}</p>
             <div dangerouslySetInnerHTML={{ __html: playlist.iframeContent }} />
           </div>
         ))}

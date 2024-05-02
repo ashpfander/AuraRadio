@@ -82,6 +82,10 @@ header h1 {
   text-decoration: none;
 }
 
+.line {
+  border: solid #40a2ad 2px;
+}
+
 .moods {
   color: white;
 }
