@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
-import AuthService from '../utils/auth'; // Import AuthService
+import AuthService from '../utils/auth'; 
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [login, { data, loading, error }] = useMutation(LOGIN_USER);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [login, { data, loading, error }] = useMutation(LOGIN_USER, {
+    onError: (error) => {
+      setErrorMessage(error.message || 'Login failed, please try again.');
+    },
+    onCompleted: (data) => {
+      AuthService.handleLoginSuccess(data.login.token);
+      setErrorMessage(''); 
+    }
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await login({
+      await login({
         variables: { email, password }
       });
-      AuthService.handleLoginSuccess(data.login.token); // Call handleLoginSuccess from AuthService
     } catch (e) {
       console.error('Error logging in:', e);
     }
@@ -23,6 +32,9 @@ function LoginForm() {
   return (
     <div className="container mt-5 d-flex justify-content-center">
       <form onSubmit={handleSubmit} className="col-5">
+        <div className="alert alert-danger" role="alert" style={{ display: errorMessage ? 'block' : 'none' }}>
+          {errorMessage}
+        </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email:</label>
           <input
@@ -43,7 +55,7 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="form-button p-3 me-3 col-2">Log In</button>
+        <button type="submit" className="btn btn-primary">Log In</button>
         <a href="/signup">Don't have a log in? Sign Up</a>
       </form>
     </div>
@@ -51,4 +63,5 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
 

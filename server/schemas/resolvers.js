@@ -4,23 +4,24 @@ const mongoose = require('mongoose');
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const ObjectId = mongoose.Types.ObjectId;
+const { ApolloError } = require('apollo-server-express');
 
-// Define custom ObjectId scalar
+// Custom ObjectId scalar
 const objectIdScalar = new GraphQLScalarType({
   name: 'ObjectId',
   description: 'MongoDB ObjectId scalar type',
   serialize(value) {
     if (value instanceof mongoose.Types.ObjectId) {
-      return value.toHexString();  // Convert ObjectId to string
+      return value.toHexString();  // Converts ObjectId to string
     }
     return value;
   },
   parseValue(value) {
-    return new mongoose.Types.ObjectId(value);  // Convert string to ObjectId
+    return new mongoose.Types.ObjectId(value);  // Converts string to ObjectId
   },
   parseLiteral(ast) {
     if (ast.kind === Kind.STRING) {
-      return new mongoose.Types.ObjectId(ast.value);  // Convert string to ObjectId
+      return new mongoose.Types.ObjectId(ast.value);  // Converts string to ObjectId
     }
     return null;
   }
@@ -49,7 +50,7 @@ const resolvers = {
           ...playlist.toObject(),
           user: {
             ...playlist.user.toObject(),
-            id: playlist.user._id.toString()  // Ensure the user ID is converted to a string
+            id: playlist.user._id.toString()  // Ensures the userID is converted to a string
           }
         }));
       } catch (error) {
@@ -94,14 +95,29 @@ const resolvers = {
       }
     },
     login: async (_, { email, password }) => {
-      const user = await User.findOne({ email });
-      if (!user || !await user.isCorrectPassword(password)) {
-        throw new Error('Incorrect credentials');
+      try {
+        const user = await User.findOne({ email });
+        if (!user) {
+          throw new Error('Incorrect Email or Password');
+        }
+    
+        const isValid = await user.isCorrectPassword(password);
+        if (!isValid) {
+          throw new Error('Incorrect Email or Password');
+        }
+    
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        throw new Error('Incorrect Email or Password');
       }
-      const token = signToken(user);
-      return { token, user };
     },
     signup: async (_, { username, email, password }) => {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        throw new ApolloError("Account already exists with this email, please log in", "USER_ALREADY_EXISTS");
+      }
+      
       const user = new User({ username, email, password });
       await user.save();
       const token = signToken(user);
