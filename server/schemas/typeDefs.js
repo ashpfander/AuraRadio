@@ -21,6 +21,15 @@ const typeDefs = gql`
     playlists: [Playlist]
   }
 
+ // type yourPlaylist {
+    id: ObjectId
+    title: String!
+    iframeContent: String!
+    description: String!
+    user: User!
+    mood: Mood!
+  }
+
   type Playlist {
     id: ObjectId
     title: String!
@@ -38,6 +47,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    createyourPlaylist(title: String!, iframeContent: String!, description: String!, userId: ObjectId!, moodId: ObjectId!): Playlist
     createUser(username: String!, email: String!, password: String!): User
     createMood(name: String!): Mood
     createPlaylist(title: String!, iframeContent: String!, description: String!, userId: ObjectId!, moodId: ObjectId!): Playlist
