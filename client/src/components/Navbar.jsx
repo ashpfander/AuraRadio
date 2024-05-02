@@ -36,10 +36,10 @@ function Navbar() {
       {Auth.isLoggedIn() ? (
         <>
         <li className="nav-item">
-        <Link to="/yourPlaylist"
+        <Link to="/YourPlaylists"
         // Check to see if the currentPage is `Your Playlists`, and if so we use the active link class. Otherwise, we set it to a regular link class.
-        className={currentPage === '/yourPlaylist' ? 'nav-link active' : 'nav-link'}>
-          Your Playlist History
+        className={currentPage === '/yourplaylists' ? 'nav-link active' : 'nav-link'}>
+          Your Playlists
         </Link>
         </li>
         <li className="nav-item">

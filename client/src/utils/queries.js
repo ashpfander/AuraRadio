@@ -20,16 +20,6 @@ export const GET_MOODS = gql`
   }
 `;
 
- // export const GET_YOURPLAYLIST = gql`
- //  query GetyourPlaylist {
- //    getyourPlaylist {
-  //    id
-   //   name
-  //    description
-  //  }
- //  }
- //`;
-
 export const GET_PLAYLISTS_BY_MOOD = gql`
   query GetPlaylistsByMood($moodId: ObjectId!) {
     getPlaylistsByMood(moodId: $moodId) {

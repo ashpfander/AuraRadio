@@ -1,4 +1,4 @@
-const { User, Mood, Playlist, yourPlaylist } = require('../models');
+const { User, Mood, Playlist } = require('../models');
 const { signToken } = require('../utils/auth');
 const mongoose = require('mongoose');
 const { GraphQLScalarType } = require('graphql');
@@ -70,14 +70,6 @@ const resolvers = {
       await newMood.save();
       return newMood;
     },
-
-   // createyourPlaylist: async (_, { name, description }) => {
-   //   const newyourPlaylist = new yourPlaylist({ name, description });
-   //   await newyourPlaylist.save();
-   //   return newyourPlaylist;
-  //  },
-
-
     createPlaylist: async (_, { title, iframeContent, description, userId, moodId }) => {
       console.log("Received mutation data:", { title, iframeContent, description, userId, moodId });
     
