@@ -9,6 +9,15 @@
   --hoveryellow: #d8d8d8c7;
 }
 
+form a {
+  text-decoration: none;
+  color: var(--darkerpurple);
+}
+
+form a:hover {
+  color: var(--purple);
+}
+
 header {
   background: var(--darkerpurple);
   padding: 1rem;
@@ -31,7 +40,7 @@ header h1 {
 }
 
 .home {
-  color: rgb(8, 121, 14);
+  color: white;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -39,11 +48,30 @@ header h1 {
 }
 
 .home-button {
-  color: aliceblue;
-  background-color: rgb(199, 52, 52);
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1.25rem;
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.home-button:after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
 }
 
 .home-button:hover {
@@ -52,6 +80,10 @@ header h1 {
 
 .home-link {
   text-decoration: none;
+}
+
+.line {
+  border: solid #40a2ad 2px;
 }
 
 .moods {
