@@ -6,6 +6,7 @@ import Moods from './pages/Moods.jsx';
 import Playlists from './pages/Playlists.jsx';
 import LoginForm from './components/LoginForm.jsx';
 import SignUpForm from './components/SignUpForm.jsx';
+import YourPlaylist from './pages/YourPlaylist.jsx';
 import Home from './pages/Home.jsx';
 import AuthService from './utils/auth'; // Import AuthService
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
         path: '/:moodId/playlists',
         element: <Playlists />,
       },
+      {
+        path: '/yourPlaylist',
+        element: <YourPlaylist />,
+      }
     ]
   }
 ]);
