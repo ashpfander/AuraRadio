@@ -6,11 +6,11 @@ export default defineConfig({
   plugins: [react()],
   // adds server area for graphql
   server: {
-    port: 3000,
+    port: 3001,
     open: true,
     proxy: {
       '/graphql': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:3002',
         changeOrigin: true,
         secure: false,
       }

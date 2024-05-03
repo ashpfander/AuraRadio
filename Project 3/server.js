@@ -4,7 +4,7 @@ const path = require('path');
 const { typeDefs, resolvers } = require('../server/schemas');
 const connectDB = require('./connection');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
